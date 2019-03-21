@@ -33,7 +33,7 @@
     # when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
 
 - name: "Install app_disco agent from archive"
-  command: sudo bash install -r us-west-2 -k "{{ app_disco_key_key }}" -s "{{ app_disco_key_secret }}"
+  command: bash install -r us-west-2 -k "{{ app_disco_key_key }}" -s "{{ app_disco_key_secret }}" -p true -c true -b true
   args:
     chdir: "{{ app_disco_dir }}"
     # when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0

@@ -1,0 +1,45 @@
+---
+
+- name: "dir to download aws-discovery-agent.tar.gz"
+  file:
+    path: "{{ app_disco_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: no
+
+#- name: is amazon app_disco agent installed
+#  yum:
+#    list: "amazon-app_disco-agent"
+#  register: yummy
+
+#- name: debug yum list
+#  debug:
+#    var: yummy
+
+- name: "fetch AWS Cloudwatch agent archive if not already installed"
+  get_url:
+    url: "{{ app_disco_src_url }}"
+    dest: "{{ app_disco_zip }}"
+    mode: 550
+    # when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
+
+- name: "Unzip app_disco agent archive"
+  unarchive:
+    dest: "{{ app_disco_dir }}"
+    remote_src: yes
+    src: "{{ app_disco_zip }}"
+    # when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
+
+- name: "Install app_disco agent from archive"
+  command: sudo bash install -r us-west-2 -k "{{ app_disco_key_key }}" -s "{{ app_disco_key_secret }}"
+  args:
+    chdir: "{{ app_disco_dir }}"
+    # when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
+
+- name: restart amazon app_disco service
+  systemd:
+    enabled: yes
+    name: amazon-app_disco-agent
+    state: "restarted"

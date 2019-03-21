@@ -1,0 +1,5 @@
+---
+# defaults for ucopacme.aws-app-discovery-agent
+app_disco_dir: '/opt/src/aws-discovery-agent'
+app_disco_zip: '/opt/src/aws-discovery-agent/aws-discovery-agent.tar.gz'
+app_disco_src_url: 'https://s3-us-west-2.amazonaws.com/aws-discovery-agent.us-west-2/linux/latest/aws-discovery-agent.tar.gz'

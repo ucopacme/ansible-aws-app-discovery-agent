@@ -1,0 +1,3 @@
+---
+# tasks file for ucopacme.aws-app-discovery-agent
+- include: "{{ansible_system}}_install.yml"
